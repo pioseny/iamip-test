@@ -1,0 +1,55 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        our_db_provider:
+            entity:
+                class: AuthModuleBundle:User
+                property: email
+        in_memory:
+            memory: ~
+
+    firewalls:
+        #secured_area:
+        #        # ...
+        #        logout:
+        #            path:   /logout
+        #           target: /
+
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            form_login:
+                login_path: auth_login
+                check_path: auth_login
+                username_parameter: form[email]
+                password_parameter: form[password]
+                csrf_token_generator: security.csrf.token_manager
+                #csrf_parameter: _csrf_security_token
+                #csrf_token_id: a_private_strings
+            logout:
+                path:   /logout
+                target: /
+                #invalidate_session: false
+                #delete_cookies:
+                #    a: { path: null, domain: null }
+                #    b: { path: null, domain: null }
+                #handlers: [some.service.id, another.service.id]
+                #success_handler: some.service.id
+    encoders:
+        AuthModuleBundle\Entity\User:
+                    algorithm:            bcrypt
+                    cost:                 15

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    </head>
+
+<body>
+
+<a href="{{ url('auth_main') }}">Ekran główny</a> |
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <a href="{{ url('logout') }}">Wyloguj mnie</a>
+{% else %}
+    <a href="{{ url('auth_register') }}">Rejestracja</a> |
+    <a href="{{ url('auth_login') }}">Logowanie</a>
+{% endif %}
+
+<div class="container">
+    {% if messages is defined %}
+    {{ messages|raw }}
+    {% endif %}
+    {% if app.session.flashBag.has('warning') %}
+        <div class="alert alert-warning">
+            {% for msg in app.session.flashBag.get('warning') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if app.session.flashBag.has('error') %}
+        <div class="alert alert-error">
+            {% for msg in app.session.flashBag.get('error') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% block body %}{% endblock %}
+</div> <!-- /container -->
+
+{% block javascripts %}{% endblock %}
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>

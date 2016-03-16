@@ -1,0 +1,34 @@
+AuthModuleBundle\Entity\User:
+    type: entity
+    table: null
+    repositoryClass: AuthModuleBundle\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        firstname:
+            type: string
+            length: 255
+        lastname:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        isConfirmed:
+            type: boolean
+            column: is_confirmed
+        password:
+            type: string
+            length: 255
+        token:
+            type: string
+            length: 255
+        birthday:
+            type: date
+        registered:
+            type: date
+    lifecycleCallbacks: {  }

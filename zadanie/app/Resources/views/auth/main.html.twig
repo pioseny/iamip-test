@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <p>Obecnie jesteś
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        : {{ app.user.email }}
+    {% else %}nie
+    {% endif %}zalogowany.
+    </p>
+{% endblock %}
